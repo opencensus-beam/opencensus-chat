@@ -1,8 +1,10 @@
 defmodule Chat.History do
   def get() do
+    :ocp.with_child_span("Chat.History.get")
+
     url = Application.get_env(:chat, Chat.History)[:url]
 
-    case :httpc.request(:get, {url, get_tracing_headers() ++ [{'Content-Type', 'application/json'}]}, [], []) do
+    result = case :httpc.request(:get, {url, get_tracing_headers() ++ [{'Content-Type', 'application/json'}]}, [], []) do
       {:ok, {{'HTTP/1.1', 200, 'OK'}, _headers, body}} ->
         body
 
@@ -11,12 +13,20 @@ defmodule Chat.History do
 
       _ -> {:error, "Connection error"}
     end
+
+    :ocp.finish_span()
+
+    result
   end
 
   def add(data) when is_binary(data) do
+    :ocp.with_child_span("Chat.History.add")
+
     url = Application.get_env(:chat, Chat.History)[:url]
 
     :httpc.request(:post, {url, get_tracing_headers(), 'application/json', to_string(data)}, [], [])
+
+    :ocp.finish_span()
   end
 
 #

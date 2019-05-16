@@ -1,0 +1,24 @@
+%% -*- mode: erlang -*-
+{ application, chat_history, [
+    {title, "Chat app history microservice"},
+    {description, ""},
+    {vsn, "1.0.0"},
+    {registered, []},
+    {mod, {chat_history_app, []}},
+    {applications, [
+        kernel,
+        stdlib,
+        lager,
+        cowboy,
+        inets,
+        prometheus_cowboy,
+        prometheus_process_collector,
+        opencensus,
+        opencensus_cowboy,
+        opencensus_erlang_prometheus,
+        barrel
+    ]},
+    {env, [
+    ]},
+    {modules, []}
+]}.

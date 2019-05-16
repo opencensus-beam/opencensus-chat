@@ -1,0 +1,9 @@
+chat/_build
+chat/deps
+chat/mix.lock
+chat_ui/node_modules
+chat_ui/package-lock.json
+history/rebar.lock
+history/_build
+history/log
+history/data
